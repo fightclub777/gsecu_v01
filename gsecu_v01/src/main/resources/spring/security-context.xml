@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bs:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:bs="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<http auto-config="true">
+		<intercept-url pattern="/admin/h*" access="hasRole('ROLE_H_ADMIN')"/>
+		<intercept-url pattern="/admin/m*" access="hasAnyRole('ROLE_M_ADMIN', 'ROLE_H_ADMIN')"/>
+		<intercept-url pattern="/admin/l*" access="hasAnyRole('ROLE_L_ADMIN', 'ROLE_M_ADMIN', 'ROLE_H_ADMIN')"/>
+		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_L_ADMIN', 'ROLE_M_ADMIN', 'ROLE_H_ADMIN')"/>
+		<intercept-url pattern="/**" access="permitAll"/>
+	</http>
+	<!-- 
+	# 'access'의 개념.
+		: 특정 url에 접근 가능한 역할(권한)을 설정한다.
+	# 'access'의 종류.
+		1) hasRole(역할)
+			: url에 접근이 가능한 역할(혹은 권한)을 하나 지정하고 접근자가 이 역할을 가졌는지 체크한다.
+		2) hasAnyRole(역할, 역할...)
+			: url에 접근이 가능한 역할을 여러개 지정하고 접근자가 이중에 하나의 역할을 가졌는지 체크한다.
+		3) hasIpAddress(ip)
+			: url에 접근 가능한 ip를 지정하고 접근자가 이 IP주소를 가졌는지 확인한다.
+		4) permitAll
+			: 모든 접근자를 승인한다.
+		5) denyAll
+			: 모든 접근자를 거부한다.
+		6) anonymous
+			: 접근자가 익명 사용자인지 확인한다.
+		7) authenticated
+			: 인증된 접근자인지 확인한다.
+		8) rememberMe
+			: 접근자가 remember me를 통해 인증했는지 확인한다.
+		9) fullAuthenticated
+			: 사용자가 모든 크리덴셜을 갖춘 상태에서 인증했는지 확인한다.
+		※ 각각의 access 방법 사이에 AND, OR 연산도 가능하다.
+			: access="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA') or authenticated"
+	-->
+	
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="ha" password="1234" authorities="ROLE_H_ADMIN"/>
+				<user name="ma" password="1234" authorities="ROLE_M_ADMIN"/>
+				<user name="la" password="1234" authorities="ROLE_L_ADMIN"/>
+				<user name="ur" password="1234" authorities="ROLE_USER"/>
+				<user name="laur" password="1234" authorities="ROLE_L_ADMIN, ROLE_USER"/>
+				<!-- 
+				# 'authorities'의 개념.
+					: 사용자에게 역할(권한)을 부여한다. 역할은 하나일수도 다수일수도 있다.
+				※ 'authorities'에 역할을 정할 때 규칙이 하나 있는데,
+					반드시 'ROLE_'로 시작해야 한다는 것이다.
+					'ROLE_'로 시작하지 않으려면 특정한 커스터마이징을 해야하므로 
+					커스터마이징을 하지 않고 사용한다면 'ROLE_'로 시작하는 규칙을 반드시 따른다.
+				-->
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</bs:beans>
