@@ -7,9 +7,8 @@
 	<!-- Root Context -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/security-context.xml</param-value>
+		<param-value>classpath:spring/root-context.xml, classpath:spring/security-context.xml</param-value>
     </context-param>
-    
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
