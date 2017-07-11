@@ -41,11 +41,11 @@
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="ha" password="1234" authorities="ROLE_H_ADMIN"/>
-				<user name="ma" password="1234" authorities="ROLE_M_ADMIN"/>
-				<user name="la" password="1234" authorities="ROLE_L_ADMIN"/>
-				<user name="ur" password="1234" authorities="ROLE_USER"/>
-				<user name="laur" password="1234" authorities="ROLE_L_ADMIN, ROLE_USER"/>
+				<user name="hadmin" password="1234" authorities="ROLE_H_ADMIN"/>
+				<user name="madmin" password="1234" authorities="ROLE_M_ADMIN"/>
+				<user name="ladmin" password="1234" authorities="ROLE_L_ADMIN"/>
+				<user name="user" password="1234" authorities="ROLE_USER"/>
+				<user name="adminuser" password="1234" authorities="ROLE_L_ADMIN, ROLE_USER"/>
 				<!-- 
 				# 'authorities'의 개념.
 					: 사용자에게 역할(권한)을 부여한다. 역할은 하나일수도 다수일수도 있다.
