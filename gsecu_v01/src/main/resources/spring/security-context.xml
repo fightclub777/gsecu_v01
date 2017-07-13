@@ -26,14 +26,20 @@
 			: 모든 접근자를 승인한다.
 		5) denyAll
 			: 모든 접근자를 거부한다.
-		6) anonymous
-			: 접근자가 익명 사용자인지 확인한다.
-		7) authenticated
-			: 인증된 접근자인지 확인한다.
-		8) rememberMe
-			: 접근자가 remember me를 통해 인증했는지 확인한다.
-		9) fullAuthenticated
-			: 사용자가 모든 크리덴셜을 갖춘 상태에서 인증했는지 확인한다.
+		6) isAnonymous()
+			: 접근자가 익명 사용자인지 확인한다. 확인 후 맞으면 true 리턴.
+		7) isAuthenticated()
+			: 익명 사용자가 아닐 경우(로그인 성공 후 인증에 성공한 경우) 인증된 접근자인지 확인한다. 확인 후 맞으면 true 리턴. 
+		8) isRememberMe()
+			: 접근자가 Spring Security의 Remember-me를 통해 인증했는지 확인한다. 확인 후 맞으면 true 리턴.
+		9) isFullyAuthenticated()
+			: 익명 사용자가 아니고, Remember-me기능으로 로그인 하지 않은 사용자일 경우 true 리턴.
+		10) hasPermission(Object target, Object permission)
+			: 타겟에 지정된 권한으로 접근할 수 있는 경우 true 리턴.
+			예) hasPermission(domainObject, 'read') // 도메인 객체에 "read"권한이 있는가?
+		11) hasPermission(Object targetId, String targetType, Object permission)
+			: 특정 타겟 Id에 지정된 권한으로 접근할 수 있는 경우 true 리턴.
+			예) hasPermission(1, 'net.gongple.domain.Post', 'read') // 도메인 객체에 "read"권한이 있는가?
 		※ 각각의 access 방법 사이에 AND, OR 연산도 가능하다.
 			: access="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA') or authenticated"
 	-->
